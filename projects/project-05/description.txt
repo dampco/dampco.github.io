@@ -1,0 +1,3 @@
+Red Phone (2022)
+ A functional art piece built from a vintage-style no-dial red telephone, this project creates a direct, one-line connection to my best friend. When the handset is lifted, the phone instantly dials out via a Polycom Google Voice VOIP box to a matching red phone at their home—complete with flashing indicator light and that unmistakable mechanical ring.
+Equal parts Cold War drama and personal hotline, Red Phone is about keeping things simple, immediate, and analog—even in a digital world.

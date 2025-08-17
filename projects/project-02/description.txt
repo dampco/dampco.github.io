@@ -1,0 +1,3 @@
+DEFCON (2016)
+ Inspired by the iconic DEFCON alert displays from the 1983 film WarGames, this piece reimagines the system as a functional weather display. Temperatures are shown in 10-degree increments—DEFCON 5 for the 60s°F through DEFCON 1 for 100s°F.
+The enclosure is hand-welded from cold rolled 16-gauge steel and finished in matte black. Colored acrylic panels are laser cut to match the aesthetic of Cold War-era technology. A Particle Photon microcontroller connects via Wi-Fi to pull live data from the Weather Underground API at five-minute intervals.

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Damp Co. — Calibration Certified</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#40616C" />
+  <meta name="description" content="Damp Co. showcases art and concept builds with a 1950s industrial vibe — galleries, product mockups, and in-progress experiments.">
+  <link rel="icon" href="favicon.png" type="image/png">
+
+<link rel="stylesheet" href="style.css">
+
+
+  <style>
+    /* Embedded DDC Hardware Regular */
+    @font-face{
+      font-family: "DDC Hardware";
+      src: url("data:font/woff2;base64,AAAB...<snip>...") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ===== THEME ===== */
+    :root{
+      --bg: #F6ECE4;     /* background */
+      --ink: #40616C;    /* secondary text */
+      --accent: #F15A24; /* heading/button orange */
+      --card: #ffffff;
+      --line: color-mix(in oklab, #000 12%, var(--bg) 88%);
+
+      --font-body: "DDC Hardware", "DDC Hardware Regular", system-ui, -apple-system,
+                   Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      --font-head: var(--font-body);
+      --size-h1: clamp(56px, 9vw, 104px);   /* larger hero headline */
+      --size-h2: clamp(28px, 4vw, 48px);
+      --size-tag: clamp(18px, 2.2vw, 28px); /* larger taglines */
+      --size-body: 16px;
+      --radius: 12px;
+    }
+
+    /* ===== Base ===== */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: var(--size-body)/1.6 var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--ink); text-decoration: none; }
+
+    .wrap { max-width: 1280px; padding: 0 24px; margin: 0 auto; }
+
+    /* ===== Header / Nav (polish + hover underline + scroll shadow) ===== */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in oklab, var(--bg) 88%, #fff 12%);
+      border-bottom: 1px solid var(--line);
+      transition: box-shadow .2s ease, border-color .2s ease;
+    }
+    header.scrolled { box-shadow: 0 6px 20px rgba(0,0,0,.08);
+                      border-color: color-mix(in oklab, var(--ink) 20%, var(--line) 80%); }
+    .bar { display: flex; align-items: flex-end; justify-content: space-between; padding: 10px 0; gap: 16px; }
+    .logo img { height: 96px; }
+    @media (max-width: 700px){ .logo img { height: 64px; } }
+
+    nav a { position: relative; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; margin-left: 24px; }
+    nav a::after { content: ""; position: absolute; left: 0; bottom: -8px; height: 3px; width: 0; background: var(--accent); transition: width .18s ease; }
+    nav a:hover::after { width: 100%; }
+
+:root{
+  /* keep your other vars… */
+  --header-bg: #40616C;   /* your secondary (contrast) */
+}
+
+/* Dark header bar */
+header{
+  position: sticky; top: 0; z-index: 10;
+  background: var(--header-bg);            /* ← dark */
+  border-bottom: 0;
+  transition: box-shadow .2s ease, background .2s ease;
+}
+header.scrolled{ box-shadow: 0 6px 20px rgba(0,0,0,.18); }
+
+/* Bigger logo still */
+.logo img{ height: 96px; }
+@media (max-width:700px){ .logo img{ height: 64px; } }
+
+/* Orange nav text on dark bar */
+nav{
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;                 /* allow wrap on smaller widths */
+  gap: 28px;                       /* proportional spacing between items */
+}
+nav a{
+  color: var(--accent);                     /* ← orange text */
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 400;                         /* keep regular to match font file */
+  margin-left: 0;                           /* spacing handled by nav gap */
+  /* Subtle white stroke for readability on dark header */
+  -webkit-text-stroke: 0.5px rgba(255,255,255,0.35);
+  text-shadow:
+    1px 0   rgba(255,255,255,0.25),
+   -1px 0   rgba(255,255,255,0.25),
+    0   1px rgba(255,255,255,0.25),
+    0  -1px rgba(255,255,255,0.25); /* Firefox fallback */
+}
+
+/* Underline animation in a lighter orange so it pops on dark bg */
+nav a::after{
+  content:"";
+  position:absolute; left:0; bottom:-8px;
+  height:3px; width:0;
+  background: color-mix(in oklab, var(--accent) 85%, white 15%);
+  transition: width .18s ease;
+}
+nav a:hover::after{ width:100%; }
+
+/* Nav font size */
+nav a { font-size: 1.8rem; line-height: 1; /* 20% larger than 1.5rem */ }
+
+/* ===== Responsive nav scaling to avoid bunching ===== */
+@media (max-width: 1000px){
+  nav{ gap: 20px; }
+  nav a{ font-size: 1.5rem; }
+}
+@media (max-width: 700px){
+  .bar{ align-items: center; flex-wrap: wrap; }
+  nav{ width: 100%; justify-content: center; gap: 16px; }
+  nav a{
+    font-size: 1.25rem;
+    letter-spacing: 0.05em; /* tighten a bit so words fit */
+    -webkit-text-stroke: 0.25px rgba(255,255,255,0.25);
+    text-shadow:
+      1px 0   rgba(255,255,255,0.18),
+     -1px 0   rgba(255,255,255,0.18),
+      0   1px rgba(255,255,255,0.18),
+      0  -1px rgba(255,255,255,0.18);
+  }
+}
+@media (max-width: 480px){
+  nav{ gap: 12px; }
+  nav a{
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    -webkit-text-stroke: 0.2px rgba(255,255,255,0.2);
+    text-shadow:
+      1px 0   rgba(255,255,255,0.12),
+     -1px 0   rgba(255,255,255,0.12),
+      0   1px rgba(255,255,255,0.12),
+      0  -1px rgba(255,255,255,0.12);
+  }
+}
+
+
+
+    /* ===== Hero ===== */
+    main { padding-bottom: 40px; }
+    .hero {
+      display: grid; grid-template-columns: 1fr 1.25fr;
+      align-items: center; gap: 40px; padding: 56px 0;
+    }
+    @media (max-width: 900px){ .hero { grid-template-columns: 1fr; } }
+
+    h1, h2 {
+      font-family: var(--font-head);
+      line-height: 1.05;
+      margin: 0 0 12px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    h1 { font-size: var(--size-h1); }
+    h2 { font-size: var(--size-h2); }
+
+    .tag {
+      color: var(--ink);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin: 0 0 20px;
+      font-size: var(--size-tag);
+    }
+    .btn {
+      display: inline-block; padding: 12px 18px; border: 2px solid var(--accent);
+      background: var(--accent); color: #fff; font-weight: 800; letter-spacing: 0.05em;
+      text-decoration: none; border-radius: 6px;
+    }
+    .btn.ghost { background: transparent; color: var(--accent); }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 6px;
+      box-shadow: 0 2px 0 color-mix(in oklab, var(--accent) 20%, black 0%);
+    }
+
+    /* ===== Sections ===== */
+    section { padding: 56px 0; border-top: 1px solid var(--line); }
+
+    /* ===== Projects grid ===== */
+    .grid { display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 900px){ .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px){ .grid { grid-template-columns: 1fr; } }
+
+    .tile img { border-radius: 8px; }
+
+    /* ===== Footer ===== */
+    footer { padding: 40px 0 60px; color: color-mix(in oklab, var(--ink) 70%, black 30%); }
+    .credits { text-align: center; margin-top: 24px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.06em; font-size: 200%; line-height: 1; }
+    /* Footer horizontal layout */
+    /* Center brand column so credits aligns above it */
+    .footer-row{ display:grid; grid-template-columns: 1fr auto 1fr; align-items:flex-end; gap:16px; margin-top:6px; }
+    .footer-brand img{ height: 120px; }
+    .footer-brand{ justify-self:center; }
+    .footer-socials{ display:flex; align-items:flex-end; gap:16px; justify-self:end; }
+    .footer-socials img{ display:block; }
+    .footer-copy{ margin:0; display:block; line-height:1; justify-self:start; color: var(--header-bg); }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="wrap bar">
+      <div class="logo">
+        <a href="#home" aria-label="Go to top/Home">
+          <img src="dampco-logo.svg" alt="Damp Co logo">
+        </a>
+      </div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">What we’re about</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <main class="wrap" id="home">
+    <section class="hero">
+      <div>
+        <p class="tag hero-subtitle-top">YOUR SOURCE FOR</p>
+    	   <h1 class="hero-title">GLOBAL<br>THERMONUCLEAR<br>WARFARE</h1>
+        <p class="tag hero-subtitle-bottom">WHEN YOU NEED IT MOST</p>
+        <div style="margin-top:16px;">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn ghost" href="#about" style="margin-left:8px;">What we’re about</a>
+        </div>
+      </div>
+      <div class="panel">
+        <img src="hero.jpg" alt="Damp Co manufacturing hero art">
+      </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="grid">
+        <figure class="tile"><img src="optimized-thumbs/project-01-800w.jpg" alt="Project 01 — Nude Nudes series" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-01/01_NudeNudes.png, projects/project-01/02_NudeNudes.png, projects/project-01/03_NudeNudes.png, projects/project-01/04_NudeNudes.jpg" data-description="“Nude Nudes” (2024)
+A nostalgic homage to the bold roadside signage of 1980s Southern California, this piece is inspired by a strip club marquee near LAX that loomed large in my childhood memory. The enclosure was 3D printed, painted, and weathered by hand. Laser-cut acrylic and vinyl form the lettering, and warm LEDs bring the sign to life with a vintage glow."></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-02-800w.jpg" alt="Project 02 — DEFCON" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-02/01_DEFCON.png, projects/project-02/02_DEFCON.png, projects/project-02/03_DEFCON.jpg, projects/project-02/04_DEFCON.jpg"></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-03-800w.jpg" alt="Project 03 — BTTF" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-03/01_BTTF.png, projects/project-03/02_BTTF.png"></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-04-800w.jpg" alt="Project 04 — CINERAMA" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-04/01_CINERAMA.png, projects/project-04/02_CINERAMA.png, projects/project-04/03_CINERAMA.png, projects/project-04/04_CINERAMA.png, projects/project-04/05_CINERAMA.png"></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-05-800w.jpg" alt="Project 05 — Red Phone" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-05/01_RedPhone.png, projects/project-05/02_RedPhone.png"></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-06-800w.jpg" alt="Project 06 — Navy Seals" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-06/01_NavySeals.png, projects/project-06/02_NavySeals.png, projects/project-06/03_NavySeals.png, projects/project-06/04_NavySeals.png"></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-07-800w.jpg" alt="Project 07 — ADS-B" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-07/01_ADSB.png, projects/project-07/02_ADSB.png, projects/project-07/03_ADSB.PNG, projects/project-07/04_ADSB.PNG"></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-08-800w.jpg" alt="Project 08 — Gravy Bloods" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-08/01_GravyBloods.png, projects/project-08/02_GravyBloods.png, projects/project-08/03_GravyBloods.png, projects/project-08/04_GravyBloods.png, projects/project-08/05_GravyBloods.png"></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-09-800w.jpg" alt="Project 09 — Badges" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-09/01_Badges.png, projects/project-09/02_Badges.png, projects/project-09/03_Badges.png, projects/project-09/04_Badges.png, projects/project-09/05_Badges.png"></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-10-800w.jpg" alt="Project 10 — Coming soon" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-11-800w.jpg" alt="Project 11 — ISS Display" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-11/01_ISS Display.jpg"></figure>
+        <figure class="tile"><img src="optimized-thumbs/project-12-800w.jpg" alt="Project 12 — Raytheon CNC" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" data-gallery="projects/project-12/01_Raytheon CNC.jpg"></figure>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about">
+      <div class="panel" style="display:block; text-align:center;">
+        <h2 style="font-size: calc(2 * var(--size-h2)); margin: 0 0 16px;">WHAT WE’RE<br>ALL ABOUT</h2>
+        <div class="about-grid" style="display:grid; grid-template-columns:auto auto; gap:24px; align-items:center; justify-content:center;">
+          <img src="about.jpg" alt="Founders at Yellowstone" style="border:4px solid var(--accent); border-radius:12px;">
+          <div style="font-weight:800; color:var(--ink); text-transform:uppercase; letter-spacing:0.05em; line-height:1.02; font-size: clamp(28px, 6vw, 72px); text-align:center;">
+            THESE TWO<br>GRAVY BLOODS ARE<br>ALL SWEET<br>NO VINEGAR
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lightbox-close" aria-label="Close">×</button>
+    <button class="lightbox-prev" aria-label="Previous">‹</button>
+    <div class="lightbox-main">
+      <figure class="lightbox-figure">
+        <img class="lightbox-image" alt="">
+        <div class="lightbox-count" aria-live="polite"></div>
+        <figcaption class="lightbox-caption"></figcaption>
+      </figure>
+      <div class="lightbox-desc" aria-live="polite"></div>
+    </div>
+    <button class="lightbox-next" aria-label="Next">›</button>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="credits">A Division Of</div>
+
+      <div class="footer-row">
+        <small class="footer-copy">© <span id="year"></span> Damp Co.</small>
+        <div class="footer-brand"><img src="raytheon-logo.svg" alt="Raytheon logo"></div>
+        <div class="footer-socials">
+          <a href="https://www.youtube.com/@YOURCHANNEL" target="_blank" rel="noopener" aria-label="YouTube"><img src="youtube-icon.svg" alt="" style="height:22px;"></a>
+          <a href="https://www.tiktok.com/@damp_co" target="_blank" rel="noopener" aria-label="TikTok"><img src="tiktok-icon.svg" alt="" style="height:22px;"></a>
+          <a href="https://www.instagram.com/YOURHANDLE" target="_blank" rel="noopener" aria-label="Instagram"><img src="instagram-icon.svg" alt="" style="height:22px;"></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header shadow on scroll
+    const hdr = document.querySelector('header');
+    const onScroll = () => hdr.classList.toggle('scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Current year (guarded in case #year is absent)
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    // ===== Projects Lightbox =====
+    (function(){
+      const gridImgs = Array.from(document.querySelectorAll('#projects .tile img'));
+      if (!gridImgs.length) return;
+      const lb = document.getElementById('lightbox');
+      const imgEl = lb.querySelector('.lightbox-image');
+      const capEl = lb.querySelector('.lightbox-caption');
+      const countEl = lb.querySelector('.lightbox-count');
+      const descEl = lb.querySelector('.lightbox-desc');
+      const btnClose = lb.querySelector('.lightbox-close');
+      const btnPrev = lb.querySelector('.lightbox-prev');
+      const btnNext = lb.querySelector('.lightbox-next');
+      let idx = 0;
+      let gallery = [];
+      let galleryDescHTML = '';
+
+      let lastFocus = null;
+      function open(i, customGallery, descHTML){
+        gallery = customGallery && customGallery.length ? customGallery : gridImgs.map(el=>({ src: el.getAttribute('src'), caption: el.getAttribute('alt')||'' }));
+        galleryDescHTML = descHTML || '';
+        idx = (i + gallery.length) % gallery.length;
+        update(true);
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        lastFocus = document.activeElement;
+        btnClose.focus();
+      }
+      function close(){
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      }
+      function formatDesc(text){
+        if(!text) return '';
+        // Normalize line endings and strip BOM
+        let t = text.replace(/\r\n?|\n/g, '\n');
+        if (t.charCodeAt(0) === 0xFEFF) t = t.slice(1);
+
+        // Escape to avoid interpreting HTML and preserve line breaks exactly
+        const escLines = t.split('\n').map(l => l
+          .replaceAll('&','&amp;')
+          .replaceAll('<','&lt;')
+          .replaceAll('>','&gt;')
+        );
+        return escLines.join('\n');
+      }
+
+      function preloadAround(index){
+        const nextIdx = (index + 1) % gallery.length;
+        const prevIdx = (index - 1 + gallery.length) % gallery.length;
+        [nextIdx, prevIdx].forEach(i=>{ const im = new Image(); im.src = gallery[i].src; });
+      }
+      function update(firstOpen){
+        const item = gallery[idx];
+        imgEl.src = item.src;
+        imgEl.alt = item.caption || '';
+        // Hide caption (project number/name). Show only description text.
+        capEl.textContent = '';
+        capEl.style.display = 'none';
+        if (countEl) {
+          countEl.textContent = `Image ${idx + 1} of ${gallery.length}`;
+        }
+        if (firstOpen && galleryDescHTML){
+          descEl.innerHTML = galleryDescHTML;
+          descEl.style.display = '';
+        } else if (!galleryDescHTML){
+          descEl.textContent = '';
+          descEl.style.display = 'none';
+        }
+        preloadAround(idx);
+      }
+      function next(){ idx = (idx + 1) % gallery.length; update(); }
+      function prev(){ idx = (idx - 1 + gallery.length) % gallery.length; update(); }
+
+      async function fetchDescriptionFor(img){
+        // Priority: explicit data-desc-src -> derive from data-gallery first item -> derive from thumbnail src
+        const explicit = img.getAttribute('data-desc-src');
+        let url = explicit || '';
+        if(!url){
+          const list = (img.getAttribute('data-gallery')||'').split(',').map(s=>s.trim()).filter(Boolean);
+          if(list.length){
+            const first = list[0];
+            const folder = first.substring(0, first.lastIndexOf('/')+1);
+            url = folder + 'description.txt';
+          }
+        }
+        if(!url){
+          // derive projects/project-XX/description.txt from project-XX.jpg
+          const m = (img.getAttribute('src')||'').match(/project-(\d+)\.[^.]+$/i);
+          if(m){ url = `projects/project-${m[1]}/description.txt`; }
+        }
+        if(!url) return '';
+        try{
+          const res = await fetch(url);
+          if(!res.ok) throw new Error('HTTP '+res.status);
+          const txt = await res.text();
+          return formatDesc(txt);
+        }catch(e){
+          // Silent fallback if not available (e.g., file served from file://)
+          return '';
+        }
+      }
+
+      gridImgs.forEach((im, i)=>{
+        im.style.cursor = 'zoom-in';
+        im.addEventListener('click', async ()=>{
+          const list = (im.getAttribute('data-gallery')||'').split(',').map(s=>s.trim()).filter(Boolean);
+          // Prefer optimized 1600w JPEGs if present (generated by tools/optimize_images.sh)
+          const optList = list.map(p => {
+            const m = p.match(/^(projects\/project-\d+\/)([^\/.]+)\.[a-z0-9]+$/i);
+            return m ? `${m[1]}optimized/${m[2]}-1600w.jpg` : p;
+          });
+          const inlineDesc = im.getAttribute('data-description')||'';
+          let descHTML = formatDesc(inlineDesc);
+          // Try fetching description.txt; if fetch returns content, it replaces inline
+          const fetched = await fetchDescriptionFor(im);
+          if(fetched) descHTML = fetched;
+          if (list.length){
+            const custom = optList.map((src)=>({ src, caption: '' }));
+            open(0, custom, descHTML);
+          } else {
+            // No gallery defined yet: open just this thumbnail as a single-slide gallery
+            const single = [{ src: im.getAttribute('src'), caption: '' }];
+            open(0, single, descHTML);
+          }
+        });
+        im.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); im.click(); } });
+        im.setAttribute('tabindex','0');
+        im.setAttribute('role','button');
+        im.setAttribute('aria-label', (im.alt? (im.alt+ ' — '): '') + 'Open in viewer');
+      });
+      btnClose.addEventListener('click', close);
+      btnNext.addEventListener('click', next);
+      btnPrev.addEventListener('click', prev);
+      lb.addEventListener('click', (e)=>{ if(e.target===lb) close(); });
+      window.addEventListener('keydown', (e)=>{
+        if(!lb.classList.contains('open')) return;
+        if(e.key==='Escape') close();
+        if(e.key==='ArrowRight') next();
+        if(e.key==='ArrowLeft') prev();
+        if(e.key==='Tab'){
+          // Focus trap inside lightbox
+          const focusables = lb.querySelectorAll('button, [tabindex="0"]');
+          if(!focusables.length) return;
+          const first = focusables[0];
+          const last = focusables[focusables.length-1];
+          if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+          else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+        }
+      });
+
+      // Basic touch swipe
+      let touchX = 0, touchY = 0, touchTime = 0;
+      lb.addEventListener('touchstart', (e)=>{
+        const t = e.changedTouches[0];
+        touchX = t.clientX; touchY = t.clientY; touchTime = Date.now();
+      }, {passive:true});
+      lb.addEventListener('touchend', (e)=>{
+        if(!lb.classList.contains('open')) return;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - touchX;
+        const dy = t.clientY - touchY;
+        const dt = Date.now() - touchTime;
+        if (dt < 600 && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
+          if (dx < 0) next(); else prev();
+        }
+      }, {passive:true});
+    })();
+  </script>
+</body>
+</html>

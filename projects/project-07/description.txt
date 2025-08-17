@@ -1,0 +1,3 @@
+Piaware Data Display (2025)
+ A compact, self-contained flight tracking dashboard that visualizes real-time data from a local PiAware ADS-B receiver. The display shows aircraft currently in range, including flight numbers, altitude, and distance from the receiver—updating automatically every 30 seconds.
+Housed in a rugged Quilpsu waterproof enclosure, the unit features a Raspberry Pi Zero W connected to a 20x4 character LCD. A Python script queries dump1090 data locally, parses it, and refreshes the screen with only the most relevant nearby flights. All exterior labels and markings are color laser printed onto water slide decal paper, giving the piece a clean, finished look. It’s a simple, always-on reference for anyone with a curiosity for the skies overhead.
