@@ -56,15 +56,23 @@
 .hero-title{
   line-height: 0.82;   /* a touch tighter than before */
   margin: 0;           /* no extra gaps above/below */
+  font-family: "DDC Hardware", "DDC Hardware Regular", system-ui, -apple-system,
+               Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  /* Smaller, still responsive */
+  font-size: clamp(40px, 6vw, 76px);
 }
 
 /* Make the two small lines use identical spacing and size */
 .tag.hero-subtitle-top,
 .tag.hero-subtitle-bottom{
-  margin: 0.12em 0;         /* equal, slightly tighter */
+  margin: 0.06em 0;         /* base tighter spacing */
   font-size: var(--size-tag);
   display: block;
 }
+/* Pull top line closer to GLOBAL */
+.tag.hero-subtitle-top{ margin: 0 0 0.02em; }
+/* Pull bottom line closer to WARFARE */
+.tag.hero-subtitle-bottom{ margin: 0.02em 0 0; }
 
 /* === ABOUT SECTION CLEANUP === */
 
@@ -119,7 +127,7 @@
 #about h2{
   margin-top: 0.75rem;             /* less gap above */
   margin-bottom: 1rem;             /* less gap below */
-  line-height: 1.05;               /* a tad tighter */
+  line-height: 0.86;               /* even tighter between lines */
 }
 
 /* ===== Lightbox ===== */

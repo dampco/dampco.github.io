@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Damp Co. — Calibration Certified</title>
+  <title>Damp Co. - OSHA Certified Slice Inspectors</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#40616C" />
   <meta name="description" content="Damp Co. showcases art and concept builds with a 1950s industrial vibe — galleries, product mockups, and in-progress experiments.">
@@ -12,10 +12,29 @@
 
 
   <style>
-    /* Embedded DDC Hardware Regular */
+    /* DDC Hardware — Compressed (site-wide) */
+    @font-face{
+      font-family: "DDC Hardware Compressed";
+      src: local("DDC Hardware Compressed"), local("DDC Hardware-Compressed"),
+           url("fonts/DDCHardware-Compressed.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    /* DDC Hardware — Regular (hero title only) */
     @font-face{
       font-family: "DDC Hardware";
-      src: url("data:font/woff2;base64,AAAB...<snip>...") format("woff2");
+      src: local("DDC Hardware"), local("DDC Hardware Regular"),
+           url("fonts/DDCHardware-Regular.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    /* Hamilton Script — for footer credits */
+    @font-face{
+      font-family: "Hamilton Script";
+      src: local("Hamilton Script"),
+           url("fonts/hamiltonscript-webfont.woff") format("woff");
       font-weight: 400;
       font-style: normal;
       font-display: swap;
@@ -29,7 +48,7 @@
       --card: #ffffff;
       --line: color-mix(in oklab, #000 12%, var(--bg) 88%);
 
-      --font-body: "DDC Hardware", "DDC Hardware Regular", system-ui, -apple-system,
+      --font-body: "DDC Hardware Compressed", system-ui, -apple-system,
                    Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       --font-head: var(--font-body);
       --size-h1: clamp(56px, 9vw, 104px);   /* larger hero headline */
@@ -65,7 +84,9 @@
     }
     header.scrolled { box-shadow: 0 6px 20px rgba(0,0,0,.08);
                       border-color: color-mix(in oklab, var(--ink) 20%, var(--line) 80%); }
-    .bar { display: flex; align-items: flex-end; justify-content: space-between; padding: 10px 0; gap: 16px; }
+.bar { display: flex; align-items: flex-end; justify-content: space-between; padding: 10px 0; gap: 16px; }
+.logo{ display: flex; align-items: flex-end; }
+.logo a{ display: flex; align-items: flex-end; }
     .logo img { height: 96px; }
     @media (max-width: 700px){ .logo img { height: 64px; } }
 
@@ -82,10 +103,14 @@
 header{
   position: sticky; top: 0; z-index: 10;
   background: var(--header-bg);            /* ← dark */
-  border-bottom: 0;
-  transition: box-shadow .2s ease, background .2s ease;
+  border-bottom: 4px solid var(--accent);  /* thicker orange divider */
+  box-shadow: none;                        /* 100% flat */
+  transition: none;                        /* no animated changes */
 }
-header.scrolled{ box-shadow: 0 6px 20px rgba(0,0,0,.18); }
+header.scrolled{
+  box-shadow: none;                         /* keep flat */
+  border-bottom: 4px solid var(--accent);   /* ensure orange stays on scroll */
+}
 
 /* Bigger logo still */
 .logo img{ height: 96px; }
@@ -99,19 +124,13 @@ nav{
   gap: 28px;                       /* proportional spacing between items */
 }
 nav a{
-  color: var(--accent);                     /* ← orange text */
+  color: #fff;                              /* white text */
   position: relative;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 400;                         /* keep regular to match font file */
   margin-left: 0;                           /* spacing handled by nav gap */
-  /* Subtle white stroke for readability on dark header */
-  -webkit-text-stroke: 0.5px rgba(255,255,255,0.35);
-  text-shadow:
-    1px 0   rgba(255,255,255,0.25),
-   -1px 0   rgba(255,255,255,0.25),
-    0   1px rgba(255,255,255,0.25),
-    0  -1px rgba(255,255,255,0.25); /* Firefox fallback */
+  /* remove stroke/shadow to avoid outlined look */
 }
 
 /* Underline animation in a lighter orange so it pops on dark bg */
@@ -119,7 +138,7 @@ nav a::after{
   content:"";
   position:absolute; left:0; bottom:-8px;
   height:3px; width:0;
-  background: color-mix(in oklab, var(--accent) 85%, white 15%);
+  background: #fff;                        /* white underline for consistency */
   transition: width .18s ease;
 }
 nav a:hover::after{ width:100%; }
@@ -133,31 +152,31 @@ nav a { font-size: 1.8rem; line-height: 1; /* 20% larger than 1.5rem */ }
   nav a{ font-size: 1.5rem; }
 }
 @media (max-width: 700px){
-  .bar{ align-items: center; flex-wrap: wrap; }
-  nav{ width: 100%; justify-content: center; gap: 16px; }
+  .bar{ align-items: flex-end; flex-wrap: wrap; padding: 8px 0; }
+  nav{ width: 100%; justify-content: center; gap: 12px; }
   nav a{
-    font-size: 1.25rem;
-    letter-spacing: 0.05em; /* tighten a bit so words fit */
-    -webkit-text-stroke: 0.25px rgba(255,255,255,0.25);
-    text-shadow:
-      1px 0   rgba(255,255,255,0.18),
-     -1px 0   rgba(255,255,255,0.18),
-      0   1px rgba(255,255,255,0.18),
-      0  -1px rgba(255,255,255,0.18);
+    font-size: 1.15rem;           /* slightly smaller to fit */
+    letter-spacing: 0.05em;
+    padding: 10px 4px;            /* larger tap targets */
+    -webkit-text-stroke: 0;       /* ensure no outline */
+    text-shadow: none;
   }
+  /* Hero buttons: larger targets on mobile */
+  .btn{ padding: 14px 18px; min-height: 44px; font-size: 1rem; }
+  /* Remove inline left margin on ghost button when stacked */
+  .btn.ghost{ margin-left: 0 !important; }
 }
 @media (max-width: 480px){
   nav{ gap: 12px; }
   nav a{
-    font-size: 1.05rem;
+    font-size: 1rem;
     letter-spacing: 0.04em;
-    -webkit-text-stroke: 0.2px rgba(255,255,255,0.2);
-    text-shadow:
-      1px 0   rgba(255,255,255,0.12),
-     -1px 0   rgba(255,255,255,0.12),
-      0   1px rgba(255,255,255,0.12),
-      0  -1px rgba(255,255,255,0.12);
+    -webkit-text-stroke: 0;       /* keep flat */
+    text-shadow: none;
   }
+  /* Stack hero buttons full-width on very small screens */
+  .btn{ display: block; width: 100%; text-align: center; }
+  .btn + .btn{ margin-top: 8px; }
 }
 
 
@@ -165,7 +184,7 @@ nav a { font-size: 1.8rem; line-height: 1; /* 20% larger than 1.5rem */ }
     /* ===== Hero ===== */
     main { padding-bottom: 40px; }
     .hero {
-      display: grid; grid-template-columns: 1fr 1.25fr;
+      display: grid; grid-template-columns: 1fr 1.8fr; /* give image even more room */
       align-items: center; gap: 40px; padding: 56px 0;
     }
     @media (max-width: 900px){ .hero { grid-template-columns: 1fr; } }
@@ -216,7 +235,7 @@ nav a { font-size: 1.8rem; line-height: 1; /* 20% larger than 1.5rem */ }
 
     /* ===== Footer ===== */
     footer { padding: 40px 0 60px; color: color-mix(in oklab, var(--ink) 70%, black 30%); }
-    .credits { text-align: center; margin-top: 24px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.06em; font-size: 200%; line-height: 1; }
+    .credits { text-align: center; margin-top: 24px; font-weight: 800; letter-spacing: 0.06em; font-size: 200%; line-height: 1; font-family: "Hamilton Script", cursive; }
     /* Footer horizontal layout */
     /* Center brand column so credits aligns above it */
     .footer-row{ display:grid; grid-template-columns: 1fr auto 1fr; align-items:flex-end; gap:16px; margin-top:6px; }
@@ -258,7 +277,7 @@ nav a { font-size: 1.8rem; line-height: 1; /* 20% larger than 1.5rem */ }
         </div>
       </div>
       <div class="panel">
-        <img src="hero.jpg" alt="Damp Co manufacturing hero art">
+        <img src="hero2.jpg" alt="Damp Co manufacturing hero art">
       </div>
     </section>
 
@@ -317,7 +336,7 @@ A nostalgic homage to the bold roadside signage of 1980s Southern California, th
 
       <div class="footer-row">
         <small class="footer-copy">© <span id="year"></span> Damp Co.</small>
-        <div class="footer-brand"><img src="raytheon-logo.svg" alt="Raytheon logo"></div>
+        <div class="footer-brand"><img src="raytheon-logo 2.png" alt="Raytheon logo"></div>
         <div class="footer-socials">
           <a href="https://www.youtube.com/@YOURCHANNEL" target="_blank" rel="noopener" aria-label="YouTube"><img src="youtube-icon.svg" alt="" style="height:22px;"></a>
           <a href="https://www.tiktok.com/@damp_co" target="_blank" rel="noopener" aria-label="TikTok"><img src="tiktok-icon.svg" alt="" style="height:22px;"></a>
